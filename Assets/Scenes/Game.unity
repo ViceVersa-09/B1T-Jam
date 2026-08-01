@@ -710,9 +710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14533103cfe8c644ab79f7bdaf353411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fence
-  jumpForce: {x: 10, y: 9}
-  leftCol: {fileID: 1936699570}
-  rightCol: {fileID: 1936699569}
+  jumpHeight: 1.5
+  forwardSpeed: 8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

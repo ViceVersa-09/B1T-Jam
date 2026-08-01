@@ -4,24 +4,22 @@ using UnityEngine.InputSystem;
 
 public class Fence : MonoBehaviour
 {
-    [Header("Jump Animation")]
-    [SerializeField] Vector2 jumpForce;
-
-    [Header("Colliders")]
-    [SerializeField] Collider2D leftCol;
-    [SerializeField] Collider2D rightCol;
+    [Header("Jump")]
+    [SerializeField] float jumpHeight = 1;
+    [SerializeField] float forwardSpeed = 1;
 
     bool canJump;
+    int playerDir;
 
+    Vector2 colOffset;
     InputAction jumpAction;
     PlayerController playerController;
-    Collider2D currentCol;
-    Vector2 ogJumpForce;
+    Collider2D[] colliders;
 
     private void Start()
     {
         jumpAction = InputSystem.actions.FindAction("Jump");
-        ogJumpForce = jumpForce;
+        colliders = GetComponents<Collider2D>();
     }
 
     private void Update()
@@ -33,13 +31,17 @@ public class Fence : MonoBehaviour
 
         if (playerController != null && playerController.jumping)
         {
-            leftCol.enabled = false;
-            rightCol.enabled = false;
+            foreach (var col in colliders)
+            {
+                col.enabled = false;
+            }
         }
         else
         {
-            leftCol.enabled = true;
-            rightCol.enabled = true;
+            foreach (var col in colliders)
+            {
+                col.enabled = true;
+            }
         }
     }
 
@@ -47,7 +49,6 @@ public class Fence : MonoBehaviour
     {
         canJump = true;
         playerController = other.GetComponent<PlayerController>();
-        AssignColliders(other);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -58,51 +59,51 @@ public class Fence : MonoBehaviour
         }
 
         canJump = false;
-        currentCol = null;
     }
 
     IEnumerator Jump()
     {
         Debug.Log("Jump");
         playerController.jumping = true;
-
-        playerController.transform.localPosition = (Vector2)transform.localPosition + currentCol.offset;
+        CheckPlayerDirection();
+        playerController.transform.position = (Vector2)transform.position + (colOffset * playerDir);
         playerController.rb.gravityScale = 2;
-        playerController.rb.linearVelocity = jumpForce;
 
-        yield return new WaitUntil(() => playerController.transform.localPosition.y != transform.localPosition.y);
+        float jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics2D.gravity.y) * jumpHeight);
+        Vector2 jumpVector = new Vector2(-playerDir * forwardSpeed, jumpVelocity);
+        playerController.rb.AddForce(jumpVector, ForceMode2D.Impulse);
 
-        while (playerController.transform.localPosition.x - transform.localPosition.x > 0.2)
+        yield return new WaitUntil(() => playerController.transform.position.y != transform.position.y);
+        while (Mathf.Abs(playerController.transform.position.x - transform.position.x) > 0.2)
         {
-            playerController.rb.linearVelocity = jumpForce;
+            playerController.rb.linearVelocity = Vector2.zero;
+            playerController.rb.AddForce(jumpVector, ForceMode2D.Impulse);
             yield return new WaitForEndOfFrame();
         }
+        playerController.rb.linearVelocityY = 0;
+        yield return new WaitUntil(() => Mathf.Abs(playerController.transform.position.y - transform.position.y) < 0.2);
 
-        jumpForce.y = -ogJumpForce.y;
-
-        while (playerController.transform.localPosition.y - transform.localPosition.y > 0.2)
-        {
-            playerController.rb.linearVelocity = jumpForce;
-            yield return new WaitForEndOfFrame();
-        }
-
-        jumpForce = ogJumpForce;
         playerController.rb.gravityScale = 0;
         playerController.jumping = false;
         playerController = null;
     }
 
-    void AssignColliders(Collider2D other)
+    void CheckPlayerDirection()
     {
-        if (other.IsTouching(rightCol))
+        if (playerController.transform.position.x > transform.position.x)
         {
-            currentCol = rightCol;
-            jumpForce.x = -ogJumpForce.x;
+            playerDir = 1;
         }
-        else if (other.IsTouching(leftCol))
+        else if (playerController.transform.position.x < transform.position.x)
         {
-            currentCol = leftCol;
-            jumpForce.x = ogJumpForce.x;
+            playerDir = -1;
         }
+        else
+        {
+            playerDir = 0;
+        }
+
+        colOffset = Vector2.zero;
+        colOffset.x = Mathf.Abs(colliders[0].offset.x);
     }
 }
