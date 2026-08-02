@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3440303662544333103}
   - component: {fileID: 4495062867419810862}
+  - component: {fileID: -8340694047318055767}
   - component: {fileID: 8301930580480428536}
   - component: {fileID: 3202462309729352988}
   - component: {fileID: 1839718948547991203}
@@ -49,6 +50,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fence
   jumpHeight: 1.5
   forwardSpeed: 8
+--- !u!114 &-8340694047318055767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4216272994486854581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313bb74edab02064e901e3c872b036d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColorController
+  color: 1
 --- !u!212 &8301930580480428536
 SpriteRenderer:
   serializedVersion: 2
