@@ -86,6 +86,7 @@ public class Fence : MonoBehaviour
         playerController.rb.gravityScale = 0;
         playerController.jumping = false;
         playerController = null;
+        Destroy(gameObject);
     }
 
     void CheckPlayerDirection()
