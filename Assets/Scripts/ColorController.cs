@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq.Expressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +49,7 @@ public class ColorController : MonoBehaviour
             {
                 spriteRenderer.color = darkColor;
             }
-            if (color == Color.light)
+            else if (color == Color.light)
             {
                 spriteRenderer.color = lightColor;
             }
@@ -59,9 +60,22 @@ public class ColorController : MonoBehaviour
             {
                 image.color = darkColor;
             }
-            if (color == Color.light)
+            else if (color == Color.light)
             {
                 image.color = lightColor;
+            }
+        }
+        else if (GetComponent<TextMeshProUGUI>() != null)
+        {
+            TextMeshProUGUI text = GetComponent<TextMeshProUGUI>();
+
+            if (color == Color.dark)
+            {
+                text.color = darkColor;
+            }
+            else if (color == Color.light)
+            {
+                text.color = lightColor;
             }
         }
     }

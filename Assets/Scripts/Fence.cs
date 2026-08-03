@@ -81,6 +81,7 @@ public class Fence : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         playerController.rb.linearVelocityY = 0;
+        GameManager.instance.Score();
         yield return new WaitUntil(() => Mathf.Abs(playerController.transform.position.y - transform.position.y) < 0.2);
 
         playerController.rb.gravityScale = 0;
