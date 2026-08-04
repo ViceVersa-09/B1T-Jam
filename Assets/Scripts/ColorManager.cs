@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ColorManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class ColorManager : MonoBehaviour
     [SerializeField] public Color32 lightColor;
 
     public bool inverted;
+
+    InputAction invertAction;
 
     private void Awake()
     {
@@ -22,6 +25,16 @@ public class ColorManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        invertAction = InputSystem.actions.FindAction("Invert");
+    }
+
+    private void Update()
+    {
+        if (invertAction.WasPressedThisFrame())
+        {
+            InvertColors();
+        }
     }
 
     public void InvertColors()

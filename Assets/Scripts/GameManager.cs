@@ -42,5 +42,10 @@ public class GameManager : MonoBehaviour
     {
         jumps++;
         scoreText.text = jumps.ToString();
+
+        if (jumps > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", jumps);
+        }
     }
 }

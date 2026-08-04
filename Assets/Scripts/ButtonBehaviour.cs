@@ -1,5 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class ButtonBehaviour : MonoBehaviour
@@ -7,6 +7,9 @@ public class ButtonBehaviour : MonoBehaviour
     public static ButtonBehaviour instance;
 
     [SerializeField] bool dontDestroy;
+    [SerializeField] GameObject pauseParent;
+
+    InputAction pauseAction;
 
     private void Awake()
     {
@@ -24,11 +27,24 @@ public class ButtonBehaviour : MonoBehaviour
 
             DontDestroyOnLoad(gameObject);
         }
+
+        pauseAction = InputSystem.actions.FindAction("Pause");
+    }
+
+    private void Update()
+    {
+        if (pauseAction.WasPressedThisFrame() && pauseParent != null)
+        {
+            PauseMenu();
+        }
     }
 
     private void OnLevelWasLoaded(int level)
     {
-        gameObject.SetActive(false);
+        if (dontDestroy)
+        {
+            pauseParent.SetActive(false);
+        }
     }
 
     public void StartGame()
@@ -38,7 +54,7 @@ public class ButtonBehaviour : MonoBehaviour
 
     public void Tutorial()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void Options()
@@ -53,13 +69,13 @@ public class ButtonBehaviour : MonoBehaviour
 
     public void PauseMenu()
     {
-        gameObject.SetActive(!gameObject.activeInHierarchy);
+        pauseParent.SetActive(!gameObject.activeInHierarchy);
 
-        if (!gameObject.activeInHierarchy)
+        if (!pauseParent.activeInHierarchy)
         {
             Time.timeScale = 1;
         }
-        else if (gameObject.activeInHierarchy)
+        else if (pauseParent.activeInHierarchy)
         {
             Time.timeScale = 0;
         }
