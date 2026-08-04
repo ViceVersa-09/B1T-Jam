@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -30,6 +31,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateTimer();
+
+        if (time <= 0)
+        {
+            EndGame();
+        }
     }
 
     void UpdateTimer()
@@ -47,5 +53,10 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", jumps);
         }
+    }
+
+    void EndGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
