@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ public class ButtonBehaviour : MonoBehaviour
 
     [SerializeField] bool dontDestroy;
     [SerializeField] GameObject pauseParent;
+    [SerializeField] TextMeshProUGUI highScoreText;
 
     InputAction pauseAction;
 
@@ -29,6 +31,11 @@ public class ButtonBehaviour : MonoBehaviour
         }
 
         pauseAction = InputSystem.actions.FindAction("Pause");
+
+        if (highScoreText != null)
+        {
+            highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("HighScore");
+        }
     }
 
     private void Update()
@@ -69,7 +76,7 @@ public class ButtonBehaviour : MonoBehaviour
 
     public void PauseMenu()
     {
-        pauseParent.SetActive(!gameObject.activeInHierarchy);
+        pauseParent.SetActive(!pauseParent.activeInHierarchy);
 
         if (!pauseParent.activeInHierarchy)
         {

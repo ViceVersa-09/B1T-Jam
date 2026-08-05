@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Results : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI resultText;
+    [SerializeField] TextMeshProUGUI highscoreText;
 
     InputAction continueAction;
 
@@ -13,7 +14,8 @@ public class Results : MonoBehaviour
     {
         continueAction = InputSystem.actions.FindAction("Jump");
 
-        resultText.text = "Sheep counted: " + PlayerPrefs.GetInt("HighScore");
+        resultText.text = "Sheep counted: " + PlayerPrefs.GetInt("Score");
+        highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("HighScore");
     }
 
     private void Update()
