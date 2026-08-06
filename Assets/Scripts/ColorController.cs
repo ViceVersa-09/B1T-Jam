@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +23,7 @@ public class ColorController : MonoBehaviour
     {
         darkColor = ColorManager.instance.darkColor; 
         lightColor = ColorManager.instance.lightColor;
-        invertChecker = ColorManager.instance.inverted;
+        invertChecker = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (spriteRenderer == null)
@@ -76,6 +74,20 @@ public class ColorController : MonoBehaviour
             else if (color == Color.light)
             {
                 text.color = lightColor;
+            }
+        }
+        else if (GetComponent<ParticleSystem>() != null)
+        {
+            ParticleSystem particles = GetComponent<ParticleSystem>();
+            ParticleSystem.MainModule mainModule = particles.main;
+
+            if (color == Color.dark)
+            {
+                mainModule.startColor = (UnityEngine.Color)darkColor;
+            }
+            else if (color == Color.light)
+            {
+                mainModule.startColor = (UnityEngine.Color)lightColor;
             }
         }
     }
