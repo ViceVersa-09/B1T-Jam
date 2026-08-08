@@ -42,7 +42,7 @@ public class OptionsManager : MonoBehaviour
 
     public void CloseOptions()
     {
-        //AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
+        AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
         gameObject.SetActive(false);
     }
 

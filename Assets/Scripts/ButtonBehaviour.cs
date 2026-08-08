@@ -56,26 +56,35 @@ public class ButtonBehaviour : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Tutorial()
     {
-        SceneManager.LoadScene(3);
+        AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
+
+        if (SceneManager.sceneCountInBuildSettings >= 4)
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 
     public void Options()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
         OptionsManager.instance.gameObject.SetActive(true);
     }
 
     public void MainMenu()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
         SceneManager.LoadScene(0);
     }
 
     public void PauseMenu()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.buttonClip);
         pauseParent.SetActive(!pauseParent.activeInHierarchy);
 
         if (!pauseParent.activeInHierarchy)

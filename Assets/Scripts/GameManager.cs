@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public void Score()
     {
         jumps++;
+        AudioManager.instance.PlaySFXPitched(AudioManager.instance.scoreClip);
         scoreText.text = jumps.ToString();
         PlayerPrefs.SetInt("Score", jumps);
         if (jumps > PlayerPrefs.GetInt("HighScore", 0))

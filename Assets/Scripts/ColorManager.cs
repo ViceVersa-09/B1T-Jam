@@ -40,5 +40,6 @@ public class ColorManager : MonoBehaviour
     public void InvertColors()
     {
         inverted = !inverted;
+        AudioManager.instance.PlaySFX(AudioManager.instance.invertClip);
     }
 }

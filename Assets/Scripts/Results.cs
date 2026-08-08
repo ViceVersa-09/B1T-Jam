@@ -16,6 +16,8 @@ public class Results : MonoBehaviour
 
         resultText.text = "Sheep counted: " + PlayerPrefs.GetInt("Score");
         highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("HighScore");
+
+        AudioManager.instance.PlaySFX(AudioManager.instance.resultClip);
     }
 
     private void Update()

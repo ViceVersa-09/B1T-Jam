@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    InputAction jumpAction;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         moveAction = InputSystem.actions.FindAction("Move");
+        jumpAction = InputSystem.actions.FindAction("Jump");
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
         if (moveAction.IsPressed() && !jumping)
         {
             MovePlayer(moveAction.ReadValue<Vector2>());
+            StartCoroutine(AudioManager.instance.WalkLoop());
         }
         else if (!moveAction.IsPressed() && !jumping)
         {
@@ -33,6 +36,11 @@ public class PlayerController : MonoBehaviour
         }
 
         Graphics();
+
+        if (jumpAction.WasPressedThisFrame())
+        {
+            AudioManager.instance.PlaySFXPitched(AudioManager.instance.baahClip);
+        }
     }
 
     void MovePlayer(Vector2 moveVector)

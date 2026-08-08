@@ -26,6 +26,7 @@ public class Fence : MonoBehaviour
     {
         if (jumpAction.WasPressedThisFrame() && canJump && playerController != null)
         {
+            AudioManager.instance.PlaySFXPitched(AudioManager.instance.jumpClip);
             StartCoroutine(Jump());
         }
 

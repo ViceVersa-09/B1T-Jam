@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -71,12 +73,11 @@ public class CameraController : MonoBehaviour
         return targetPosition;
     }
 
-    /*
     public IEnumerator Transition(int level)
     {
         Animator animator = GetComponentInChildren<Animator>();
         animator.SetTrigger("Out");
-        AudioManager.instance.PlaySFX(AudioManager.instance.swooshClip);
+        AudioManager.instance.PlaySFX(AudioManager.instance.transitionClip);
 
         yield return new WaitForSeconds(1);
 
@@ -85,5 +86,4 @@ public class CameraController : MonoBehaviour
             SceneManager.LoadScene(level);
         }
     }
-    */
 }
